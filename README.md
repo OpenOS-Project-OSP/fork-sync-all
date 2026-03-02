@@ -14,10 +14,11 @@ A GitHub Actions workflow that syncs all forked repositories in your account wit
 
 1. Push this repository to your GitHub account.
 
-2. Create a GitHub Personal Access Token (classic) with `public_repo` scope:
+2. Create a GitHub Personal Access Token (classic) with `public_repo` and `models:read` scopes:
    - Go to **Settings > Developer settings > Personal access tokens > Tokens (classic)**
    - Click **Generate new token (classic)**
-   - Select the `public_repo` scope
+   - Select the `public_repo` scope (for repo access)
+   - Select the `models:read` scope (for AI failure resolver)
    - Copy the token
 
 3. Add the token as a repository secret:
@@ -34,6 +35,20 @@ A GitHub Actions workflow that syncs all forked repositories in your account wit
 GitHub allows 5,000 API requests per hour for authenticated users. With ~2,700 forks,
 a full sync uses roughly 2,700–5,000 requests depending on branch counts. The script
 includes rate-limit detection and will pause/resume automatically if the limit is hit.
+
+## CI Failure Resolver
+
+A second workflow (`resolve-failures.yml`) runs daily at 07:30 UTC and:
+
+1. Scans all repos across `Interested-Deving-1896`, `OpenOS-Project-OSP`, and `OpenOS-Project-Ecosystem-OOC`
+2. Finds failed workflow runs
+3. Fetches job logs and the workflow YAML file
+4. Sends them to GitHub Models (GPT-4o-mini) for analysis
+5. Auto-commits fixes when the AI produces a valid correction
+
+To trigger manually: **Actions > Resolve CI Failures > Run workflow**
+
+The `SYNC_TOKEN` PAT needs `models:read` scope for AI access.
 
 ## Merge conflicts
 
