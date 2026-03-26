@@ -13,6 +13,23 @@ set -o pipefail
 : "${SCAN_OWNERS:?SCAN_OWNERS is required}"
 
 API="https://api.github.com"
+
+# Repos the resolver must never commit to directly. These are repos where
+# automated commits cause mirror cascade loops or have their own CI pipelines
+# that should only be fixed manually or via their own upstream workflow.
+EXCLUDED_REPOS=(
+  "Interested-Deving-1896/incus-windows-toolkit"
+  "OpenOS-Project-OSP/incus-windows-toolkit"
+  "OpenOS-Project-Ecosystem-OOC/incus-windows-toolkit"
+)
+
+is_excluded() {
+  local repo="$1"
+  for excluded in "${EXCLUDED_REPOS[@]}"; do
+    [[ "$repo" == "$excluded" ]] && return 0
+  done
+  return 1
+}
 MODELS_API="https://models.github.ai/inference"
 MODEL="openai/gpt-4o-mini"
 PER_PAGE=100
@@ -340,6 +357,12 @@ for owner in $SCAN_OWNERS; do
 
   for repo in "${repos[@]}"; do
     [[ -z "$repo" ]] && continue
+
+    if is_excluded "$repo"; then
+      echo "  Skipping excluded repo: ${repo}"
+      continue
+    fi
+
     total_scanned=$(( total_scanned + 1 ))
 
     failures_json=$(get_recent_failures "$repo")
