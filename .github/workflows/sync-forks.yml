@@ -1,3 +1,4 @@
+```yaml
 name: Sync All Forks
 
 on:
@@ -7,7 +8,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   sync:
@@ -24,3 +25,4 @@ jobs:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
           GITHUB_OWNER: ${{ github.repository_owner }}
         run: bash scripts/sync-all-forks.sh
+```  
