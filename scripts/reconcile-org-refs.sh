@@ -36,11 +36,13 @@ EXCLUDED_REPOS=("fork-sync-all" "org-mirror")
 PATCHER=$(mktemp /tmp/patch_refs_XXXXXX.py)
 cat > "$PATCHER" << 'PYEOF'
 #!/usr/bin/env python3
-# Usage: python3 patcher.py <file> <src> <dst>
-# Rewrites src->dst in file, skipping `if: github.repository ==` lines.
+# Usage: python3 patcher.py <file> <src1> <dst1> [<src2> <dst2> ...]
+# Rewrites each src->dst pair in file, skipping `if: github.repository ==` lines.
 import sys, re
 
-path, src, dst = sys.argv[1], sys.argv[2], sys.argv[3]
+args = sys.argv[1:]
+path = args[0]
+pairs = [(args[i], args[i+1]) for i in range(1, len(args)-1, 2)]
 guard_re = re.compile(r'if:\s+github\.repository\s*==')
 
 try:
@@ -56,7 +58,9 @@ for line in lines:
     if guard_re.search(line):
         out.append(line)
     else:
-        new = line.replace(src, dst)
+        new = line
+        for src, dst in pairs:
+            new = new.replace(src, dst)
         if new != line:
             modified = True
         out.append(new)
@@ -127,6 +131,10 @@ get_org_repos() {
 
 process_repo() {
   local org="$1" repo="$2" target_org="$3" default_branch="$4"
+  # Extra src->dst pairs passed as additional args (e.g. OSP_ORG OOC_ORG for OOC processing)
+  shift 4
+  local extra_pairs=("$@")
+
   local tmpdir
   tmpdir=$(mktemp -d)
   # shellcheck disable=SC2064
@@ -155,10 +163,16 @@ process_repo() {
     local tmpfile="${tmpdir}/workfile"
     echo "$content_b64" | base64 -d > "$tmpfile" 2>/dev/null || continue
 
-    grep -q "$UPSTREAM_OWNER" "$tmpfile" 2>/dev/null || continue
+    # Check if file contains any of the source strings we want to replace
+    local needs_patch=0
+    grep -q "$UPSTREAM_OWNER" "$tmpfile" 2>/dev/null && needs_patch=1
+    for ((i=0; i<${#extra_pairs[@]}; i+=2)); do
+      grep -q "${extra_pairs[$i]}" "$tmpfile" 2>/dev/null && needs_patch=1
+    done
+    [[ "$needs_patch" == "0" ]] && continue
 
     local status
-    status=$(python3 "$PATCHER" "$tmpfile" "$UPSTREAM_OWNER" "$target_org")
+    status=$(python3 "$PATCHER" "$tmpfile" "$UPSTREAM_OWNER" "$target_org" "${extra_pairs[@]}")
     [[ "$status" != "MODIFIED" ]] && continue
 
     local new_b64 payload http_code
@@ -210,7 +224,12 @@ for org in "$OSP_ORG" "$OOC_ORG"; do
     [[ -z "$upstream_name" ]] && { (( total_skipped++ )) || true; continue; }
 
     default_branch=$(echo "$upstream_info" | jq -r '.default_branch // "main"')
-    process_repo "$org" "$repo" "$org" "$default_branch"
+    if [[ "$org" == "$OOC_ORG" ]]; then
+      # OOC: also rewrite any OSP references that slipped through from the mirror chain
+      process_repo "$org" "$repo" "$org" "$default_branch" "$OSP_ORG" "$OOC_ORG"
+    else
+      process_repo "$org" "$repo" "$org" "$default_branch"
+    fi
     (( total_repos++ )) || true
     echo ""
 
