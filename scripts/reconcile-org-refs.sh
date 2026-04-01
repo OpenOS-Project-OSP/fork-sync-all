@@ -37,13 +37,33 @@ PATCHER=$(mktemp /tmp/patch_refs_XXXXXX.py)
 cat > "$PATCHER" << 'PYEOF'
 #!/usr/bin/env python3
 # Usage: python3 patcher.py <file> <src1> <dst1> [<src2> <dst2> ...]
-# Rewrites each src->dst pair in file, skipping `if: github.repository ==` lines.
-import sys, re
+# Rewrites each src->dst pair in file, skipping:
+#   - `if: github.repository ==` workflow job guards
+#   - polkit/D-Bus action ID lines (com.github.pieroproietti.*)
+#   - bootloader source URLs (pieroproietti/penguins-bootloaders)
+import sys, re, os
 
 args = sys.argv[1:]
 path = args[0]
 pairs = [(args[i], args[i+1]) for i in range(1, len(args)-1, 2)]
 guard_re = re.compile(r'if:\s+github\.repository\s*==')
+# Lines that must never be rewritten regardless of content
+preserve_re = re.compile(
+    r'com\.github\.pieroproietti\.|'  # polkit/D-Bus action IDs
+    r'penguins-bootloaders'              # bootloader asset URLs
+)
+# Files that must never be touched at all
+PRESERVE_FILES = {
+    "sync-pieroproietti-forks.sh",
+    "sync-pieroproietti-forks.yml",
+    "sync-pieroproietti-forks.yaml",
+    "rebase-lts.sh",
+    "rebase-lts.yml",
+    "rebase-lts.yaml",
+}
+if os.path.basename(path) in PRESERVE_FILES:
+    print("UNCHANGED")
+    sys.exit(0)
 
 try:
     with open(path, "r", encoding="utf-8", errors="replace") as f:
@@ -55,7 +75,7 @@ except OSError as e:
 out = []
 modified = False
 for line in lines:
-    if guard_re.search(line):
+    if guard_re.search(line) or preserve_re.search(line):
         out.append(line)
     else:
         new = line
@@ -210,6 +230,20 @@ echo ""
 total_repos=0
 total_skipped=0
 
+# Also patch pieroproietti refs in the source org itself
+echo "========================================"
+echo "Scanning ${UPSTREAM_OWNER} (pieroproietti refs only)"
+echo "========================================"
+while IFS= read -r repo; do
+  [[ -z "$repo" ]] && continue
+  is_excluded "$repo" && continue
+  default_branch=$(api_get "${API}/repos/${UPSTREAM_OWNER}/${repo}" | jq -r '.default_branch // "main"')
+  [[ -z "$default_branch" || "$default_branch" == "null" ]] && continue
+  # Only rewrite pieroproietti refs; leave all other refs alone in source org
+  process_repo "$UPSTREAM_OWNER" "$repo" "$UPSTREAM_OWNER" "$default_branch"     "pieroproietti" "$UPSTREAM_OWNER"
+  echo ""
+done < <(get_org_repos "$UPSTREAM_OWNER")
+
 for org in "$OSP_ORG" "$OOC_ORG"; do
   echo "========================================"
   echo "Scanning ${org}"
@@ -225,10 +259,11 @@ for org in "$OSP_ORG" "$OOC_ORG"; do
 
     default_branch=$(echo "$upstream_info" | jq -r '.default_branch // "main"')
     if [[ "$org" == "$OOC_ORG" ]]; then
-      # OOC: also rewrite any OSP references that slipped through from the mirror chain
-      process_repo "$org" "$repo" "$org" "$default_branch" "$OSP_ORG" "$OOC_ORG"
+      # OOC: rewrite OSP refs that slipped through, and pieroproietti -> OOC
+      process_repo "$org" "$repo" "$org" "$default_branch"         "$OSP_ORG" "$OOC_ORG"         "pieroproietti" "$OOC_ORG"
     else
-      process_repo "$org" "$repo" "$org" "$default_branch"
+      # OSP: rewrite pieroproietti -> OSP
+      process_repo "$org" "$repo" "$org" "$default_branch"         "pieroproietti" "$org"
     fi
     (( total_repos++ )) || true
     echo ""
