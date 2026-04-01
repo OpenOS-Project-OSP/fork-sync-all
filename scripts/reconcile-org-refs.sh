@@ -143,9 +143,10 @@ open(sys.argv[2], 'wb').write(content)
 " "$tmp_meta" "$tmp_decoded" || { rm -f "$tmp_meta" "$tmp_decoded"; return 0; }
 
   tmp_patched=$(mktemp /tmp/patched.XXXXXX)
-  python3 "$PATCHER" "$src" "$dst" < "$tmp_decoded" > "$tmp_patched"
-  local rc=$?
-  if [ $rc -eq 2 ] || [ $rc -ne 0 ]; then
+  local rc=0
+  python3 "$PATCHER" "$src" "$dst" < "$tmp_decoded" > "$tmp_patched" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    # rc=2 means no changes needed; any other non-zero is also non-fatal
     rm -f "$tmp_meta" "$tmp_decoded" "$tmp_patched"
     return 0
   fi
