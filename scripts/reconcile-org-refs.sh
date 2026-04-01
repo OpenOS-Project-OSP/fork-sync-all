@@ -117,43 +117,56 @@ patch_file() {
   local meta
   meta=$(api_get "$API/repos/$owner/$repo/contents/$fpath" 2>/dev/null) || return 0
 
+  # Use temp files throughout — never pass large content as shell arguments
+  local tmp_meta tmp_decoded tmp_patched tmp_payload
+  tmp_meta=$(mktemp /tmp/meta.XXXXXX.json)
+  echo "$meta" > "$tmp_meta"
+
   local size encoding
-  size=$(echo "$meta"     | python3 -c "import sys,json; print(json.load(sys.stdin).get('size',0))")
-  encoding=$(echo "$meta" | python3 -c "import sys,json; print(json.load(sys.stdin).get('encoding',''))")
+  size=$(python3 -c "import sys,json; print(json.load(open(sys.argv[1])).get('size',0))" "$tmp_meta")
+  encoding=$(python3 -c "import sys,json; print(json.load(open(sys.argv[1])).get('encoding',''))" "$tmp_meta")
 
-  # Skip files >1 MB or non-base64
-  [ "$size" -gt 1048576 ] && return 0
-  [ "$encoding" != "base64" ] && return 0
-
-  local sha b64 decoded patched new_b64
-  sha=$(echo "$meta"  | python3 -c "import sys,json; print(json.load(sys.stdin)['sha'])")
-  b64=$(echo "$meta"  | python3 -c "import sys,json; print(json.load(sys.stdin)['content'])" | tr -d '\n')
-  decoded=$(echo "$b64" | base64 -d 2>/dev/null) || return 0
-
-  patched=$(echo "$decoded" | python3 "$PATCHER" "$src" "$dst") || {
-    local rc=$?
-    [ $rc -eq 2 ] && return 0   # no changes needed
+  if [ "$size" -gt 1048576 ] || [ "$encoding" != "base64" ]; then
+    rm -f "$tmp_meta"
     return 0
-  }
+  fi
 
-  new_b64=$(echo "$patched" | base64 -w 0)
+  local sha
+  sha=$(python3 -c "import sys,json; print(json.load(open(sys.argv[1]))['sha'])" "$tmp_meta")
 
-  # Write payload to temp file to avoid "Argument list too long" on large files
-  local payload_file
-  payload_file=$(mktemp /tmp/payload.XXXXXX.json)
-  python3 - "$new_b64" "$sha" "$src" "$dst" > "$payload_file" << 'PYEOF'
-import json, sys
+  tmp_decoded=$(mktemp /tmp/decoded.XXXXXX)
+  python3 -c "
+import sys, json, base64
+data = json.load(open(sys.argv[1]))
+content = base64.b64decode(data['content'].replace('\n',''))
+open(sys.argv[2], 'wb').write(content)
+" "$tmp_meta" "$tmp_decoded" || { rm -f "$tmp_meta" "$tmp_decoded"; return 0; }
+
+  tmp_patched=$(mktemp /tmp/patched.XXXXXX)
+  python3 "$PATCHER" "$src" "$dst" < "$tmp_decoded" > "$tmp_patched"
+  local rc=$?
+  if [ $rc -eq 2 ] || [ $rc -ne 0 ]; then
+    rm -f "$tmp_meta" "$tmp_decoded" "$tmp_patched"
+    return 0
+  fi
+
+  tmp_payload=$(mktemp /tmp/payload.XXXXXX.json)
+  python3 -c "
+import sys, json, base64
+patched = open(sys.argv[1], 'rb').read()
+new_b64 = base64.b64encode(patched).decode()
 print(json.dumps({
-  "message": "ci: reconcile org refs (%s -> %s)" % (sys.argv[3], sys.argv[4]),
-  "content": sys.argv[1],
-  "sha":     sys.argv[2]
+  'message': 'ci: reconcile org refs (%s -> %s)' % (sys.argv[3], sys.argv[4]),
+  'content': new_b64,
+  'sha':     sys.argv[2]
 }))
-PYEOF
+" "$tmp_patched" "$sha" "$src" "$dst" > "$tmp_payload"
 
-  api_put "$API/repos/$owner/$repo/contents/$fpath" -d "@$payload_file" > /dev/null \
+  api_put "$API/repos/$owner/$repo/contents/$fpath" -d "@$tmp_payload" > /dev/null \
     && echo "    patched: $fpath" \
     || echo "    WARN: failed to patch $fpath"
-  rm -f "$payload_file"
+
+  rm -f "$tmp_meta" "$tmp_decoded" "$tmp_patched" "$tmp_payload"
 }
 
 # ---------------------------------------------------------------------------
