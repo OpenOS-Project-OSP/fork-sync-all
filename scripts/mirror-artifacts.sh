@@ -153,9 +153,9 @@ mirror_releases_for_repo() {
 # ── main ─────────────────────────────────────────────────────────────────────
 
 echo "Validating token..."
-login=$(api_get "${API}/user" | jq -r '.login // empty')
-[[ -z "$login" ]] && { echo "ERROR: GH_TOKEN invalid."; exit 1; }
-echo "Authenticated as: $login"
+remaining=$(api_get "${API}/rate_limit" | jq -r '.resources.core.remaining // empty')
+[[ -z "$remaining" ]] && { echo "ERROR: GH_TOKEN invalid."; exit 1; }
+echo "Token valid. Core API requests remaining: $remaining"
 echo ""
 
 # GHCR mirror runs once (not per-repo)
