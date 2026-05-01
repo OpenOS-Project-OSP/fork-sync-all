@@ -1,1 +1,26 @@
+name: Sync All Forks
 
+on:
+  schedule:
+    # Daily at 06:00 UTC
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # 355 min = just under GitHub's 6h hard limit. The script self-limits at
+    # 335 min so it always exits cleanly before this timeout fires.
+    timeout-minutes: 355
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync all forks
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+        run: bash scripts/sync-all-forks.sh
