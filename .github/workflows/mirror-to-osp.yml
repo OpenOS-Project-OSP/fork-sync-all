@@ -1,1 +1,28 @@
+name: Mirror Interested-Deving-1896 → OSP
 
+on:
+  schedule:
+    # Hourly at :00 — runs before the injected mirror-osp-to-ooc.yaml (:15)
+    # so the full chain completes within the same hour:
+    #   :00  this job   → pushes upstream content into OSP
+    #   :15  per-repo   → OSP repos push themselves into OOC
+    - cron: '0 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mirror matched repos from upstream into OSP
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          UPSTREAM_OWNER: Interested-Deving-1896
+          OSP_ORG: OpenOS-Project-OSP
+        run: bash scripts/mirror-to-osp.sh
