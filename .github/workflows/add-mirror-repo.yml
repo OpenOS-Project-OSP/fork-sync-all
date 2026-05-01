@@ -1,1 +1,29 @@
+name: Add Mirror Repo
 
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: 'Upstream repo URL (must be Interested-Deving-1896/<repo>)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  add-mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mirror repo into OSP and register for ongoing sync
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          REPO_URL: ${{ inputs.repo_url }}
+          UPSTREAM_OWNER: Interested-Deving-1896
+          OSP_ORG: OpenOS-Project-OSP
+          OOC_ORG: OpenOS-Project-Ecosystem-OOC
+        run: bash scripts/add-mirror-repo.sh
