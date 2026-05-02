@@ -42,8 +42,16 @@
 set -uo pipefail
 
 : "${GH_TOKEN:?GH_TOKEN is required}"
-: "${GITLAB_TOKEN:?GITLAB_TOKEN is required}"
 : "${OSP_ORG:=OpenOS-Project-OSP}"
+
+# GITLAB_TOKEN is required but may be absent while the GitLab account is
+# pending reinstatement. Exit 0 (skip) rather than 1 (failure) so the
+# workflow does not generate CI failure notifications in the interim.
+if [ -z "${GITLAB_TOKEN:-}" ]; then
+  echo "[mirror-osp-to-gitlab] GITLAB_TOKEN is not set — skipping."
+  echo "  Set it with: gh secret set GITLAB_SYNC_TOKEN --repo OpenOS-Project-OSP/fork-sync-all"
+  exit 0
+fi
 
 GL_API="https://gitlab.com/api/v4"
 GH_API="https://api.github.com"
