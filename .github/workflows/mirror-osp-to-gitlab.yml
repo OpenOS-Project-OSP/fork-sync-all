@@ -1,0 +1,26 @@
+name: mirror-osp-to-gitlab
+
+on:
+  schedule:
+    # Hourly at :30 — runs after mirror-to-osp.yml (:00) settles OSP content,
+    # so GitLab always receives the latest OSP state within the same hour.
+    - cron: '30 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: mirror-osp-to-gitlab
+  cancel-in-progress: true
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Mirror OSP repos to GitLab openos-project
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          GITLAB_TOKEN: ${{ secrets.GITLAB_SYNC_TOKEN }}
+          OSP_ORG: OpenOS-Project-OSP
+        run: bash scripts/mirror-osp-to-gitlab.sh
