@@ -25,15 +25,15 @@ jobs:
             | grep -c '"ci_activity"') || raw=0
           count=$(printf '%s' "$raw" | tr -d '[:space:]')
 
-          echo "ci_failure_count=${count}" >> "$GITHUB_OUTPUT"
+          echo "ci_failure_count=${count}" >> "$GITHUB_ENV"
           echo "Unread CI activity notifications: ${count}"
 
       - name: Trigger resolver if failures found
-        if: ${{ steps.check.outputs.ci_failure_count != '0' }}
+        if: ${{ env.ci_failure_count != '0' }}
         env:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          echo "Found ${{ steps.check.outputs.ci_failure_count }} CI notification(s) — triggering resolver..."
+          echo "Found ${{ env.ci_failure_count }} CI notification(s) — triggering resolver..."
           curl -sf \
             -X POST \
             -H "Authorization: token ${GH_TOKEN}" \
