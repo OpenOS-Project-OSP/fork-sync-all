@@ -36,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
 
@@ -122,7 +122,7 @@ jobs:
 
       - name: Upload artifact
         if: ${{ github.event.inputs.upload_artifact != 'false' && github.event.inputs.action != 'dev-info' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gitbook-oss-${{ github.event.inputs.action || 'update' }}-${{ github.run_number }}
           path: |
