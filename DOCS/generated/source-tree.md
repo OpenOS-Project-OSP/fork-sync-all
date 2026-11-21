@@ -1,6 +1,6 @@
 # Source Tree
 
-> Auto-generated 2026-11-03 by `scripts/generate-book-pages.py`
+> Auto-generated 2026-11-18 by `scripts/generate-book-pages.py`
 
 Complete directory and file index of the fork-sync-all source hierarchy.
 Click any path to view it on GitHub.
@@ -416,6 +416,7 @@ Click any path to view it on GitHub.
 | [`forge-readme-parity.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/forge-readme-parity.md) |  |
 | [`fsa-api-deployment.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/fsa-api-deployment.md) |  |
 | [`mirror-readme-audit.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/mirror-readme-audit.md) |  |
+| [`nativelink-integration.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/nativelink-integration.md) |  |
 | [`ota-reconcile.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/ota-reconcile.md) |  |
 | [`ota-system.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/ota-system.md) |  |
 | [`pre-flush-checklist.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/pre-flush-checklist.md) |  |
@@ -1347,6 +1348,7 @@ Click any path to view it on GitHub.
 | [`mirror-releases.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/mirror-releases.sh) |  |
 | [`mirror-rpm.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/mirror-rpm.sh) |  |
 | [`mirror-to-osp.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/mirror-to-osp.sh) |  |
+| [`nativelink_adapter.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/nativelink_adapter.py) |  |
 | [`notebooklm-backend-open-notebook.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/notebooklm-backend-open-notebook.sh) |  |
 | [`notebooklm-backend-open-notebooklm.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/notebooklm-backend-open-notebooklm.sh) |  |
 | [`notebooklm-backend-openbooklm.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/scripts/notebooklm-backend-openbooklm.sh) |  |
@@ -1553,8 +1555,10 @@ Click any path to view it on GitHub.
 | [`test_managed_estate_queue_drain.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_managed_estate_queue_drain.py) |  |
 | [`test_merge_strategy_classifier.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_merge_strategy_classifier.py) |  |
 | [`test_mirror_orgs.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_mirror_orgs.py) |  |
+| [`test_nativelink_adapter.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_nativelink_adapter.py) |  |
 | [`test_new_scripts.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_new_scripts.py) |  |
 | [`test_notifications.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_notifications.py) |  |
+| [`test_onboard_detect.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_onboard_detect.py) |  |
 | [`test_ota_reconcile.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_ota_reconcile.py) |  |
 | [`test_pipeline_guard.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_pipeline_guard.py) |  |
 | [`test_pipeline_telemetry_issue.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/tests/test_pipeline_telemetry_issue.py) |  |
