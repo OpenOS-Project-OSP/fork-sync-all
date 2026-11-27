@@ -83,6 +83,19 @@ jobs:
             --sparse \
             "$UPSTREAM" "$TMP_CLONE" 2>/dev/null
 
+          # --sparse initially checks out only top-level paths. Disable sparse
+          # checkout before mirroring so nested runtime files (lib/, config/,
+          # adapters/, server/) are not silently omitted from either target.
+          git -C "$TMP_CLONE" sparse-checkout disable
+
+          # Fail before rsync if the upstream runtime shape is incomplete.
+          for required in lib/log.sh lib/shared.sh lib/routes.sh config/routes.yml server/start.sh; do
+            if [[ ! -f "$TMP_CLONE/$required" ]]; then
+              echo "ERROR: upstream UAA checkout is missing required runtime file: $required" >&2
+              exit 1
+            fi
+          done
+
           UPSTREAM_SHA="$(git -C "$TMP_CLONE" rev-parse HEAD)"
           echo "Upstream SHA: $UPSTREAM_SHA"
 
