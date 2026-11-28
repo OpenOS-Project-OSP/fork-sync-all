@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fork-sync-all.example/schema/vendor-operation.schema.json",
+  "title": "FSA Vendor Interoperability Operation",
+  "description": "Provider-neutral, non-secret operation contract shared by the three vendor interoperability engines.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "operation_id", "idempotency_key", "correlation_id",
+    "direction", "provider", "source", "destination", "authority",
+    "ownership_policy", "requested_action", "dry_run"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "operation_id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$" },
+    "idempotency_key": { "type": "string", "minLength": 16, "maxLength": 256 },
+    "correlation_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "direction": { "enum": ["to_vendor", "from_vendor", "serve_as_vendor"] },
+    "provider": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider_id", "provider_type", "capabilities"],
+      "properties": {
+        "provider_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "provider_type": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "capabilities": { "type": "array", "uniqueItems": true, "items": { "enum": ["discover", "read", "export", "import", "serve_metadata", "serve_artifacts", "webhook"] } },
+        "credential_ref": { "type": "string", "minLength": 1, "maxLength": 256, "description": "Reference to protected secret storage only; never a credential value." }
+      }
+    },
+    "source": { "$ref": "#/$defs/endpoint" },
+    "destination": { "$ref": "#/$defs/endpoint" },
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["system", "object_scope"],
+      "properties": {
+        "system": { "enum": ["fsa_canonical", "external_provider", "consumer_contract"] },
+        "object_scope": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 256 } }
+      }
+    },
+    "ownership_policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_of_truth", "allow_mutation", "approval_required", "conflict_strategy"],
+      "properties": {
+        "source_of_truth": { "enum": ["source", "destination", "explicit_authority"] },
+        "allow_mutation": { "type": "boolean" },
+        "approval_required": { "type": "boolean" },
+        "conflict_strategy": { "enum": ["reject", "manual_review", "source_wins", "destination_wins"] }
+      }
+    },
+    "requested_action": { "enum": ["discover", "plan_export", "plan_import", "plan_serve"] },
+    "dry_run": { "const": true },
+    "planned_mutations": { "type": "array", "items": { "type": "object" } },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "origin_id": { "type": "string", "maxLength": 256 },
+        "source_digest": { "type": "string", "pattern": "^(sha256:)?[a-fA-F0-9]{64}$" },
+        "parent_operation_id": { "type": "string", "maxLength": 128 },
+        "license": { "type": "string", "maxLength": 256 }
+      }
+    },
+    "limits": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "timeout_seconds": { "type": "integer", "minimum": 1, "maximum": 3600 },
+        "max_objects": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "max_bytes": { "type": "integer", "minimum": 1, "maximum": 10737418240 }
+      }
+    }
+  },
+  "$defs": {
+    "endpoint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["platform", "host", "owner", "repository", "object"],
+      "properties": {
+        "platform": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "host": { "type": "string", "minLength": 1, "maxLength": 253 },
+        "owner": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "repository": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "ref": { "type": "string", "maxLength": 256 },
+        "object": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "operation_id": "op-demo-0001",
+  "idempotency_key": "vendor-demo-0001-idempotency",
+  "correlation_id": "trace-demo-0001",
+  "direction": "to_vendor",
+  "provider": {
+    "provider_id": "example-forge",
+    "provider_type": "git",
+    "capabilities": [
+      "discover",
+      "read",
+      "export"
+    ],
+    "credential_ref": "github-actions:VENDOR_READ_TOKEN"
+  },
+  "source": {
+    "platform": "github",
+    "host": "github.com",
+    "owner": "Interested-Deving-1896",
+    "repository": "fork-sync-all",
+    "ref": "main",
+    "object": "repository"
+  },
+  "destination": {
+    "platform": "gitlab",
+    "host": "gitlab.example.invalid",
+    "owner": "downstream",
+    "repository": "fork-sync-all",
+    "ref": "main",
+    "object": "repository"
+  },
+  "authority": {
+    "system": "fsa_canonical",
+    "object_scope": [
+      "repository:fork-sync-all",
+      "ref:main"
+    ]
+  },
+  "ownership_policy": {
+    "source_of_truth": "source",
+    "allow_mutation": false,
+    "approval_required": true,
+    "conflict_strategy": "reject"
+  },
+  "requested_action": "plan_export",
+  "dry_run": true,
+  "planned_mutations": [
+    {
+      "kind": "create_or_update_ref",
+      "ref": "main",
+      "requires_approval": true
+    }
+  ],
+  "provenance": {
+    "origin_id": "github:Interested-Deving-1896/fork-sync-all",
+    "license": "inherit"
+  },
+  "limits": {
+    "timeout_seconds": 120,
+    "max_objects": 100,
+    "max_bytes": 10485760
+  }
+}
