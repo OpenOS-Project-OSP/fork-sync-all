@@ -1,6 +1,6 @@
 # Source Tree
 
-> Auto-generated 2026-11-27 by `scripts/generate-book-pages.py`
+> Auto-generated 2026-11-28 by `scripts/generate-book-pages.py`
 
 Complete directory and file index of the fork-sync-all source hierarchy.
 Click any path to view it on GitHub.
@@ -214,6 +214,7 @@ Click any path to view it on GitHub.
 | [`flush-lifecycle.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/flush-lifecycle.yml) |  |
 | [`forge-readme-parity.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/forge-readme-parity.yml) |  |
 | [`fork-neon-repos.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/fork-neon-repos.yml) |  |
+| [`fsa-api-containment.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/fsa-api-containment.yml) |  |
 | [`fsa-api.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/fsa-api.yml) |  |
 | [`full-audit.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/full-audit.yml) |  |
 | [`full-chain-flush.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/.github/workflows/full-chain-flush.yml) |  |
@@ -1214,6 +1215,13 @@ Click any path to view it on GitHub.
 | File | Description |
 |---|---|
 | [`fsa-start.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/server/fsa-start.sh) |  |
+| [`host-guard.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/server/host-guard.sh) |  |
+
+### [tests/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/tests) {#fsa-api-tests}
+
+| File | Description |
+|---|---|
+| [`test-server-containment.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/tests/test-server-containment.sh) |  |
 
 ### [uaa/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa) {#fsa-api-uaa}
 
