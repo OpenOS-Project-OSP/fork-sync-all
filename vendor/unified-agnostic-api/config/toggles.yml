@@ -1,0 +1,14 @@
+# config/toggles.yml — UAA feature toggles
+#
+# Routes with a disabled toggle are omitted from every HTTP backend at startup.
+# Toggles not listed here default to enabled; security-sensitive capabilities
+# must therefore be explicitly listed and disabled until their readiness gate passes.
+
+toggles:
+  browser_capture:
+    enabled: false
+    description: Disabled until authentication, URL/SSRF policy, sandboxing, resource limits and fixture-only integration tests are verified
+    affects:
+      - /api/browser/scrape
+      - /api/browser/screenshot
+      - /api/browser/automate
