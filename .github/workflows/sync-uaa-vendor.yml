@@ -111,22 +111,26 @@ jobs:
 
           rm -rf "$TMP_CLONE"
 
-          # Check for changes across both destinations
-          if git diff --quiet HEAD -- "$VENDOR_DIR/" "$FSA_UAA_DIR/"; then
+          # Stage first so newly restored (untracked) nested files are included.
+          # A plain git diff HEAD ignores untracked files and can incorrectly
+          # report "No changes" after a successful full checkout.
+          git add -A "$VENDOR_DIR/" "$FSA_UAA_DIR/"
+
+          # Check staged changes across both destinations, including additions/deletions.
+          if git diff --cached --quiet; then
             echo "No changes — both destinations already up to date."
             exit 0
           fi
 
-          git diff --stat HEAD -- "$VENDOR_DIR/" "$FSA_UAA_DIR/"
+          git diff --cached --stat
 
           if [[ "$DRY_RUN" == "true" ]]; then
-            echo "Dry run — not committing."
+            echo "Dry run — staged diff shown; not committing."
             exit 0
           fi
 
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "$VENDOR_DIR/" "$FSA_UAA_DIR/"
           SHORT="${UPSTREAM_SHA:0:7}"
           git commit \
             -m "chore(vendor): sync unified-agnostic-api from upstream ${SHORT}" \
