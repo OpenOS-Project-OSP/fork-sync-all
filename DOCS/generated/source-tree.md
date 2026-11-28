@@ -443,6 +443,12 @@ Click any path to view it on GitHub.
 | [`subgroup-map.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/generated/subgroup-map.md) |  |
 | [`workflow-reference.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/generated/workflow-reference.md) |  |
 
+### [vendor-interoperability/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/DOCS/vendor-interoperability) {#docs-vendor-interoperability}
+
+| File | Description |
+|---|---|
+| [`architecture.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/DOCS/vendor-interoperability/architecture.md) |  |
+
 ## [LICENSES/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/LICENSES) {#licenses}
 
 | File | Description |
@@ -1239,6 +1245,116 @@ Click any path to view it on GitHub.
 |---|---|
 | [`ci.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/.github/workflows/ci.yml) |  |
 | [`server-test.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/.github/workflows/server-test.yml) |  |
+
+#### [adapters/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters) {#fsa-api-uaa-adapters}
+
+##### [ai/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/ai) {#fsa-api-uaa-adapters-ai}
+
+| File | Description |
+|---|---|
+| [`agentic-shell.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/ai/agentic-shell.sh) |  |
+| [`bom-scan.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/ai/bom-scan.sh) |  |
+| [`complete.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/ai/complete.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/ai/manifest.yml) |  |
+
+##### [browser/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/browser) {#fsa-api-uaa-adapters-browser}
+
+| File | Description |
+|---|---|
+| [`automate.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/browser/automate.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/browser/manifest.yml) |  |
+| [`scrape.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/browser/scrape.sh) |  |
+| [`screenshot.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/browser/screenshot.sh) |  |
+
+##### [filesystem/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/filesystem) {#fsa-api-uaa-adapters-filesystem}
+
+| File | Description |
+|---|---|
+| [`ls.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/ls.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/manifest.yml) |  |
+| [`mount.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/mount.sh) |  |
+| [`read.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/read.sh) |  |
+| [`stat.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/stat.sh) |  |
+| [`write.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/filesystem/write.sh) |  |
+
+##### [github/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/github) {#fsa-api-uaa-adapters-github}
+
+| File | Description |
+|---|---|
+| [`bulk-permissions.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/bulk-permissions.sh) |  |
+| [`create-release.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/create-release.sh) |  |
+| [`issue-report.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/issue-report.sh) |  |
+| [`list-releases.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/list-releases.sh) |  |
+| [`list-repos.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/list-repos.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/github/manifest.yml) |  |
+
+##### [meta/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/meta) {#fsa-api-uaa-adapters-meta}
+
+| File | Description |
+|---|---|
+| [`health.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/meta/health.sh) |  |
+| [`list-adapters.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/meta/list-adapters.sh) |  |
+
+##### [os-compat/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/adapters/os-compat) {#fsa-api-uaa-adapters-os-compat}
+
+| File | Description |
+|---|---|
+| [`clipboard-get.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/os-compat/clipboard-get.sh) |  |
+| [`clipboard-set.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/os-compat/clipboard-set.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/os-compat/manifest.yml) |  |
+| [`process-list.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/os-compat/process-list.sh) |  |
+| [`system-info.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/adapters/os-compat/system-info.sh) |  |
+
+#### [cli/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/cli) {#fsa-api-uaa-cli}
+
+| File | Description |
+|---|---|
+| [`uaa.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/cli/uaa.sh) |  |
+
+#### [config/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/config) {#fsa-api-uaa-config}
+
+| File | Description |
+|---|---|
+| [`hooks.json`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/config/hooks.json) |  |
+| [`routes.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/config/routes.yml) |  |
+| [`toggles.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/config/toggles.yml) |  |
+| [`uaa-pin.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/config/uaa-pin.yml) |  |
+
+#### [docs/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/docs) {#fsa-api-uaa-docs}
+
+| File | Description |
+|---|---|
+| [`adapter-authoring.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/docs/adapter-authoring.md) |  |
+
+#### [lib/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/lib) {#fsa-api-uaa-lib}
+
+| File | Description |
+|---|---|
+| [`adapter.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/lib/adapter.sh) |  |
+| [`http.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/lib/http.sh) |  |
+| [`log.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/lib/log.sh) |  |
+| [`routes.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/lib/routes.sh) |  |
+| [`shared.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/lib/shared.sh) |  |
+
+#### [scripts/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/scripts) {#fsa-api-uaa-scripts}
+
+| File | Description |
+|---|---|
+| [`scaffold-consumer.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/scripts/scaffold-consumer.sh) |  |
+| [`uaa-merge-routes.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/scripts/uaa-merge-routes.py) |  |
+
+#### [server/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/server) {#fsa-api-uaa-server}
+
+| File | Description |
+|---|---|
+| [`deploy-cgi.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/server/deploy-cgi.sh) |  |
+| [`start.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/server/start.sh) |  |
+
+#### [tests/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/fsa-api/uaa/tests) {#fsa-api-uaa-tests}
+
+| File | Description |
+|---|---|
+| [`test-server-containment.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/fsa-api/uaa/tests/test-server-containment.sh) |  |
 
 ## [readme-subsystem/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/readme-subsystem) {#readme-subsystem}
 
@@ -3327,4 +3443,114 @@ Click any path to view it on GitHub.
 |---|---|
 | [`ci.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/.github/workflows/ci.yml) |  |
 | [`server-test.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/.github/workflows/server-test.yml) |  |
+
+#### [adapters/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters) {#vendor-unified-agnostic-api-adapters}
+
+##### [ai/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/ai) {#vendor-unified-agnostic-api-adapters-ai}
+
+| File | Description |
+|---|---|
+| [`agentic-shell.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/ai/agentic-shell.sh) |  |
+| [`bom-scan.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/ai/bom-scan.sh) |  |
+| [`complete.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/ai/complete.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/ai/manifest.yml) |  |
+
+##### [browser/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/browser) {#vendor-unified-agnostic-api-adapters-browser}
+
+| File | Description |
+|---|---|
+| [`automate.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/browser/automate.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/browser/manifest.yml) |  |
+| [`scrape.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/browser/scrape.sh) |  |
+| [`screenshot.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/browser/screenshot.sh) |  |
+
+##### [filesystem/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/filesystem) {#vendor-unified-agnostic-api-adapters-filesystem}
+
+| File | Description |
+|---|---|
+| [`ls.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/ls.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/manifest.yml) |  |
+| [`mount.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/mount.sh) |  |
+| [`read.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/read.sh) |  |
+| [`stat.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/stat.sh) |  |
+| [`write.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/filesystem/write.sh) |  |
+
+##### [github/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/github) {#vendor-unified-agnostic-api-adapters-github}
+
+| File | Description |
+|---|---|
+| [`bulk-permissions.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/bulk-permissions.sh) |  |
+| [`create-release.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/create-release.sh) |  |
+| [`issue-report.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/issue-report.sh) |  |
+| [`list-releases.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/list-releases.sh) |  |
+| [`list-repos.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/list-repos.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/github/manifest.yml) |  |
+
+##### [meta/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/meta) {#vendor-unified-agnostic-api-adapters-meta}
+
+| File | Description |
+|---|---|
+| [`health.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/meta/health.sh) |  |
+| [`list-adapters.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/meta/list-adapters.sh) |  |
+
+##### [os-compat/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/adapters/os-compat) {#vendor-unified-agnostic-api-adapters-os-compat}
+
+| File | Description |
+|---|---|
+| [`clipboard-get.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/os-compat/clipboard-get.sh) |  |
+| [`clipboard-set.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/os-compat/clipboard-set.sh) |  |
+| [`manifest.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/os-compat/manifest.yml) |  |
+| [`process-list.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/os-compat/process-list.sh) |  |
+| [`system-info.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/adapters/os-compat/system-info.sh) |  |
+
+#### [cli/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/cli) {#vendor-unified-agnostic-api-cli}
+
+| File | Description |
+|---|---|
+| [`uaa.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/cli/uaa.sh) |  |
+
+#### [config/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/config) {#vendor-unified-agnostic-api-config}
+
+| File | Description |
+|---|---|
+| [`hooks.json`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/config/hooks.json) |  |
+| [`routes.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/config/routes.yml) |  |
+| [`toggles.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/config/toggles.yml) |  |
+| [`uaa-pin.yml`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/config/uaa-pin.yml) |  |
+
+#### [docs/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/docs) {#vendor-unified-agnostic-api-docs}
+
+| File | Description |
+|---|---|
+| [`adapter-authoring.md`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/docs/adapter-authoring.md) |  |
+
+#### [lib/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/lib) {#vendor-unified-agnostic-api-lib}
+
+| File | Description |
+|---|---|
+| [`adapter.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/lib/adapter.sh) |  |
+| [`http.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/lib/http.sh) |  |
+| [`log.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/lib/log.sh) |  |
+| [`routes.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/lib/routes.sh) |  |
+| [`shared.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/lib/shared.sh) |  |
+
+#### [scripts/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/scripts) {#vendor-unified-agnostic-api-scripts}
+
+| File | Description |
+|---|---|
+| [`scaffold-consumer.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/scripts/scaffold-consumer.sh) |  |
+| [`uaa-merge-routes.py`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/scripts/uaa-merge-routes.py) |  |
+
+#### [server/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/server) {#vendor-unified-agnostic-api-server}
+
+| File | Description |
+|---|---|
+| [`deploy-cgi.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/server/deploy-cgi.sh) |  |
+| [`start.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/server/start.sh) |  |
+
+#### [tests/](https://github.com/Interested-Deving-1896/fork-sync-all/tree/main/vendor/unified-agnostic-api/tests) {#vendor-unified-agnostic-api-tests}
+
+| File | Description |
+|---|---|
+| [`test-server-containment.sh`](https://github.com/Interested-Deving-1896/fork-sync-all/blob/main/vendor/unified-agnostic-api/tests/test-server-containment.sh) |  |
 
