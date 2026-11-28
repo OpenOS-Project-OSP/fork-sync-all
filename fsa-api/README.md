@@ -1,8 +1,12 @@
 # fsa-api — Fork-Sync-All API
 
-A two-layer HTTP API that exposes the entire fork-sync-all control plane —
+A two-layer HTTP API that exposes the fork-sync-all control plane —
 workflows, scripts, mirror chain, docs, deployments, and codebase state —
 over a uniform REST interface. Works across all 5 git platforms.
+
+**Security boundary:** the server binds to loopback (`127.0.0.1`) by default and
+refuses non-loopback binds while route-level authentication is not verified
+across all supported backends. Do not expose this API to a LAN or the Internet.
 
 ```
 fsa-api/
@@ -200,7 +204,10 @@ GET  /api/fsa/support-bundles/:id/download download the verified archive
 POST /api/fsa/support-bundles/:id/send     deliver through local or HTTPS transport
 ```
 
-All routes are auth-gated. Collection is allowlist-based, textual payloads are
+The support-bundle endpoints are marked `auth: true`, but the shared HTTP
+backend wiring does not yet enforce that manifest field consistently. Keep the
+server loopback-only; do not treat this route metadata as a verified
+authorization boundary. Collection is allowlist-based, textual payloads are
 redacted, and every included file is recorded with a SHA-256 checksum.
 
 ### Toggles

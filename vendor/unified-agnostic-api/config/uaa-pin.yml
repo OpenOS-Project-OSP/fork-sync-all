@@ -1,0 +1,22 @@
+# config/uaa-pin.yml — UAA deployment version pin
+#
+# Locks this deployment to a specific upstream unified-agnostic-api ref.
+# Consumers that embed UAA (e.g. via vendor/ or fsa-api/uaa/) can use this
+# to track which UAA version they are running and get notified of updates.
+#
+# Fields:
+#   upstream.platform  — github | gitlab | gitea | forgejo | codeberg
+#   upstream.org       — org/namespace owning the UAA repo
+#   upstream.repo      — repo name
+#   ref                — pinned tag, branch, or full SHA
+#   auto_update        — open a PR when a newer tag is available (default: true)
+#   auto_merge         — auto-merge the update PR if CI passes (default: false)
+
+version:
+  upstream:
+    platform: github
+    org: Interested-Deving-1896
+    repo: unified-agnostic-api
+  ref: main
+  auto_update: true
+  auto_merge: false

@@ -75,7 +75,6 @@ ALL_POLLUTION_PATHS=(
   "scripts/kde-path-to-gl-id.json"
   "scripts/rl-manifest-to-md.py"
   ".github/workflows/sync-template.yml"
-  ".github/workflows/validate-config.yml"
   ".github/workflows/generate-dep-graph.yml"
   # Org-wide workflows incorrectly propagated to consumer repos — these run
   # centrally from fork-sync-all and must not exist on consumer repos.

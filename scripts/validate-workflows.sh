@@ -164,6 +164,7 @@ ALLOWED_WORKFLOWS=(
   "flush-lifecycle.yml"
   "forge-readme-parity.yml"
   "fsa-api.yml"
+  "fsa-api-containment.yml" # local FSA API loopback safety gate; not exported to consumers
   "full-audit.yml"
   "full-chain-flush.yml"
   "gen-arch-config.yml"

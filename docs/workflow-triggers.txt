@@ -1,7 +1,7 @@
 FORK-SYNC-ALL — WORKFLOW TRIGGERS
 ===================================
 Generated from .github/workflows/ and config/workflow-quota-costs.yml
-Last updated: 2026-11-03
+Last updated: 2026-11-28
 
 Legend
 ------
@@ -633,6 +633,14 @@ Docker → Incus Migration  (docker-to-incus.yml)
   schedule   Weekly Sun 03:08  (8 3 * * 0)
   workflow_run  Add Mirror Repo
   dispatch
+
+FSA API Containment  (fsa-api-containment.yml)
+  push       fsa-api/server/fsa-start.sh
+  push       fsa-api/server/host-guard.sh
+  push       fsa-api/README.md
+  push       fsa-api/tests/test-server-containment.sh
+  push       .github/workflows/fsa-api-containment.yml
+  pull_request
 
 FSA API  (fsa-api.yml)
   FSA API server lifecycle and adapter dispatch. Validates config, smoke-tests

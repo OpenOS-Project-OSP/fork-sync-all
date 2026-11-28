@@ -39,12 +39,12 @@ Control plane for the `Interested-Deving-1896` GitHub org. Runs 147 GitHub Actio
 > See the [Codex Cloud migration guide](DOCS/codex-cloud-migration.md) for the
 > checked-in installation command, start instructions, and credential handoff.
 
-<!-- FSA-COUNTS-START — updated 2026-11-03 by generate-workflow-triggers-doc.py -->
+<!-- FSA-COUNTS-START — updated 2026-11-28 by generate-workflow-triggers-doc.py -->
 | | |
 |---|---|
-| Workflows | **191** |
+| Workflows | **192** |
 | Registered imports | **156** |
-| Template consumers | **86** |
+| Template consumers | **88** |
 | GitLab subgroups | **14** |
 | GitLab repos mirrored | **228** |
 <!-- FSA-COUNTS-END -->
@@ -123,7 +123,7 @@ This project automates repository management tasks for git-based platforms, addr
 
 ## Workflow groups
 
-<!-- FSA-GROUPS-START — updated 2026-11-03 by generate-workflow-triggers-doc.py -->
+<!-- FSA-GROUPS-START — updated 2026-11-28 by generate-workflow-triggers-doc.py -->
 159 workflows across 20 functional groups. Full detail in [DOCS/workflow-triggers.md](DOCS/workflow-triggers.md).
 
 | Group | Workflows | Description |
@@ -459,8 +459,8 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 <!-- AI:start:contributors -->
 | Contributor | Commits |
 |---|---|
-| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 1133 |
-| [@github-actions[bot]](https://github.com/apps/github-actions) | 275 |
+| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 1136 |
+| [@github-actions[bot]](https://github.com/apps/github-actions) | 278 |
 | [@dependabot[bot]](https://github.com/apps/dependabot) | 18 |
 | [@actions-user](https://github.com/actions-user) | 7 |
 | [@web-flow](https://github.com/web-flow) | 5 |
