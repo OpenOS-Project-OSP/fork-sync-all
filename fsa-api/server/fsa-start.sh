@@ -11,10 +11,10 @@
 #
 # Environment:
 #   FSA_PORT     — listen port (default: 8090)
-#   FSA_HOST     — listen host (default: 0.0.0.0)
+#   FSA_HOST     — listen host (default: 127.0.0.1; loopback only)
 #   FSA_BACKEND  — http backend: shell2http | cgi | webhook (default: shell2http)
 #   FSA_LOG      — log level: debug | info | warn (default: info)
-#   FSA_AUTH     — bearer token for auth-gated routes (optional)
+#   FSA_AUTH     — reserved bearer token; route-level enforcement is not yet verified
 #   GH_TOKEN     — GitHub token for FSA adapter calls (required)
 #   FSA_ORG      — GitHub org (default: Interested-Deving-1896)
 #   FSA_REPO     — control-plane repo (default: fork-sync-all)
@@ -25,17 +25,17 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FSA_API_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 UAA_ROOT="$FSA_API_ROOT/uaa"
 
-# Source UAA libs (log + routes + shared)
-source "$UAA_ROOT/lib/log.sh"
-source "$UAA_ROOT/lib/shared.sh"
-source "$UAA_ROOT/lib/routes.sh"
-
 FSA_PORT="${FSA_PORT:-8090}"
-FSA_HOST="${FSA_HOST:-0.0.0.0}"
+FSA_HOST="${FSA_HOST:-127.0.0.1}"
 FSA_BACKEND="${FSA_BACKEND:-shell2http}"
 FSA_LOG="${FSA_LOG:-info}"
 FSA_ORG="${FSA_ORG:-Interested-Deving-1896}"
 FSA_REPO="${FSA_REPO:-fork-sync-all}"
+FSA_CONSUMER_CFG="$FSA_API_ROOT/config/fsa-consumer.yml"
+
+# Keep the host guard independent of the UAA snapshot: it must run even when
+# the vendored UAA runtime is incomplete or unavailable.
+source "$SCRIPT_DIR/host-guard.sh"
 
 # ── Argument parsing ──────────────────────────────────────────────────────────
 while [[ $# -gt 0 ]]; do
@@ -48,9 +48,19 @@ while [[ $# -gt 0 ]]; do
       grep '^#' "$0" | sed 's/^# \?//'
       exit 0
       ;;
-    *) warn "unknown argument: $1"; shift ;;
+    *) printf 'WARN: unknown argument: %s\\n' "$1" >&2; shift ;;
   esac
 done
+
+# Until route authentication is enforced and verified for every backend,
+# the FSA API must remain loopback-only. This is an HTTP-server boundary;
+# direct local CLI invocation is unaffected.
+fsa_validate_host "$FSA_HOST" || exit 1
+
+# Source UAA libs only after the host has passed the independent safety guard.
+source "$UAA_ROOT/lib/log.sh"
+source "$UAA_ROOT/lib/shared.sh"
+source "$UAA_ROOT/lib/routes.sh"
 
 export FSA_PORT FSA_HOST FSA_LOG FSA_ORG FSA_REPO FSA_API_ROOT UAA_ROOT
 
@@ -66,21 +76,21 @@ with open('$FSA_API_ROOT/config/fsa-consumer.yml') as f:
 print(str(c.get('consumer',{}).get('enabled', False)).lower())
 " 2>/dev/null || echo "false")
   if [[ "$_consumer_enabled" == "true" ]]; then
-    export CONSUMER_BRAND=$(python3 -c "
+    CONSUMER_BRAND=$(python3 -c "
 import yaml
 with open('$FSA_API_ROOT/config/fsa-consumer.yml') as f:
     c = yaml.safe_load(f) or {}
 print(c.get('consumer',{}).get('brand',''))
 " 2>/dev/null)
-    export CONSUMER_PREFIX=$(python3 -c "
+    CONSUMER_PREFIX=$(python3 -c "
 import yaml
 with open('$FSA_API_ROOT/config/fsa-consumer.yml') as f:
     c = yaml.safe_load(f) or {}
 print(c.get('consumer',{}).get('api_prefix',''))
 " 2>/dev/null)
+    export CONSUMER_BRAND CONSUMER_PREFIX
   fi
 fi
-FSA_CONSUMER_CFG="${FSA_CONSUMER_CFG:-$FSA_API_ROOT/config/fsa-consumer.yml}"
 # UAA libs use REPO_ROOT; point it at the FSA API root so relative script
 # paths in fsa-routes.yml resolve correctly.
 export REPO_ROOT="$FSA_API_ROOT"
@@ -95,7 +105,6 @@ fi
 UAA_ROUTES="$UAA_ROOT/config/routes.yml"
 FSA_ROUTES="$FSA_API_ROOT/config/fsa-routes.yml"
 FSA_TOGGLES="$FSA_API_ROOT/config/fsa-toggles.yml"
-FSA_CONSUMER_CFG="$FSA_API_ROOT/config/fsa-consumer.yml"
 MERGED_ROUTES="/tmp/fsa-merged-routes-$$.yml"
 
 [[ -f "$UAA_ROUTES" ]] || { error "UAA routes not found: $UAA_ROUTES"; exit 1; }
